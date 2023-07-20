@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "c7d635bb-5e4d-47c0-8c43-e13015e50152",
+		"name": "Test Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28447930"
+	},
+	"item": [
+		{
+			"name": "Test Country Query",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Query specific Country for array of items\", function () {",
+							"",
+							"    // Get the country from the URL parameter.",
+							"    const countryName = pm.request.url.query.get(\"country\");",
+							"",
+							"    // Postman encodes the parameters when they have spaces which is a pain",
+							"    // So I used the decodeURIComponent to help get round some issues ",
+							"    const decodedCountry = decodeURIComponent(countryName);",
+							"",
+							"    // Parse response in JSON",
+							"    const responseJSON = pm.response.json();",
+							"",
+							"    // Verify that response is an array",
+							"    pm.expect(responseJSON).to.be.an(\"array\");",
+							"",
+							"    // Making sure there are no invalid Countries",
+							"    // The API responds with empty arrays if it's incorrect",
+							"    pm.expect(responseJSON.length).to.be.greaterThan(0);",
+							"",
+							"    // Check if all items in the response match the country",
+							"    responseJSON.forEach(function (item) {",
+							"        pm.expect(item.country).to.equal(decodedCountry);",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}?country=Italy",
+					"host": [
+						"{{baseurl}}"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "Italy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Object Types",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonResponse = pm.response.json();",
+							"",
+							"// Checking that web_pages properties are array and that the items in the array are strings",
+							"pm.test(\"Response contains web_pages array\", function() { ",
+							"    pm.expect(jsonResponse.forEach(item => {",
+							"        pm.expect(item).to.have.property(\"web_pages\").and.to.be.an(\"array\");",
+							"        pm.expect(\"web_pages\").to.be.a('string');",
+							"",
+							"    }));",
+							"    ",
+							"    // pm.expect(jsonResponse[0, 193, 640, 1352, 3463]).to.have.property(\"web_pages\").and.to.be.an(\"array\");",
+							"})",
+							"",
+							"// Checking the domains propertie are array and that the items in the array are strings",
+							"pm.test(\"Response contains domains array\", function() { ",
+							"    pm.expect(jsonResponse.forEach(item => {",
+							"        pm.expect(item).to.have.property(\"domains\").and.to.be.an(\"array\");",
+							"        pm.expect(\"domains\").to.be.a('string');",
+							"",
+							"    }));",
+							"",
+							"    // pm.expect(jsonResponse[2785, 5047, 1602, 4329, 923]).to.have.property(\"domains\").and.to.be.an(\"array\");",
+							"})",
+							"",
+							"// Checking that the country properties are strings",
+							"pm.test(\"Response contains country string type\", function() { ",
+							"",
+							"    pm.expect(jsonResponse.forEach(item => {",
+							"        pm.expect(item).to.have.property(\"country\").and.to.be.a(\"string\");",
+							"    }));",
+							"",
+							"    // pm.expect(jsonResponse[3571, 1896, 5152, 2678, 4023]).to.have.property(\"country\").and.to.be.a(\"string\");",
+							"})",
+							"",
+							"// Checking that the name properties are strings",
+							"pm.test(\"Response contains name string type\", function() { ",
+							"    pm.expect(jsonResponse.forEach(item => {",
+							"        pm.expect(item).to.have.property(\"name\").and.to.be.a(\"string\");",
+							"    }));",
+							"",
+							"    // pm.expect(jsonResponse[5429, 3762, 4815, 570, 2884]).to.have.property(\"name\").and.to.be.a(\"string\");",
+							"})",
+							"",
+							"// Checking that the state_province properties are strings",
+							"pm.test(\"Response contains state-province string type\", function() { ",
+							"",
+							"    // The brief doesn't say to expect null values, just that the response type is string",
+							"    // I could write a Country specific test for this - Canada would be a good example.",
+							"    // {{baseurl}}?country=Canada ",
+							"    // pm.expect(jsonResponse.forEach(item => {",
+							"    //     pm.expect(item).to.have.property(\"state-province\").and.to.be.a(\"string\");",
+							"    // }));",
+							"",
+							"    pm.expect(jsonResponse.forEach(item => {",
+							"        pm.expect(item).to.have.property(\"state-province\").and.to.be.a(\"string\");",
+							"    }));",
+							"",
+							"})",
+							"",
+							"// Checking that the alpha_two_code properties are strings",
+							"pm.test(\"Response contains alpha_two_code string type\", function() { ",
+							"    pm.expect(jsonResponse.forEach(item => {",
+							"        pm.expect(item).to.have.property(\"alpha_two_code\").and.to.be.a(\"string\");",
+							"    }));",
+							"    ",
+							"    // pm.expect(jsonResponse[5928, 1279, 5288, 1438, 4187]).to.have.property(\"alpha_two_code\").and.to.be.a(\"string\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}",
+					"host": [
+						"{{baseurl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Name Query",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Query specific Name for single object\", function () {",
+							"",
+							"    // Get the uni name from the parameter",
+							"    const uniName = pm.request.url.query.get(\"name\");",
+							"",
+							"    // Postman encodes the parameters when they have spaces which is a pain",
+							"    // So I used the decodeURIComponent to help get round some issues ",
+							"    const decodedName = decodeURIComponent(uniName);",
+							"",
+							"    // Parse response in JSON",
+							"    const responseJSON = pm.response.json();",
+							"",
+							"   // Check if the response contains just one object with the decoded name",
+							"    pm.expect(responseJSON.length).to.equal(1);",
+							"    pm.expect(responseJSON[0].name).to.equal(decodedName);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}?name=Pontificia Università S. Tommaso",
+					"host": [
+						"{{baseurl}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Pontificia Università S. Tommaso"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Empty Array Query",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// I basically just copied the name Query request and changed it very slightly.",
+							"",
+							"pm.test(\"Query non-existent university should return empty array\", function () {",
+							"    // Get the uni name from the parameter",
+							"    const uniName = pm.request.url.query.get(\"name\");",
+							"",
+							"    // Postman encodes the parameters when they have spaces which is a pain",
+							"    // So I used the decodeURIComponent to help get round some issues ",
+							"    const decodedName = decodeURIComponent(uniName);",
+							"",
+							"    // Parse response in JSON",
+							"    const responseJSON = pm.response.json();",
+							"",
+							"    // Check that it's an array",
+							"    pm.expect(responseJSON).to.be.an(\"array\");",
+							"",
+							"    // Check that array is empty",
+							"    pm.expect(responseJSON).to.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}?name=Random University Name",
+					"host": [
+						"{{baseurl}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Random University Name"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "http://universities.hipolabs.com/search",
+			"type": "string"
+		}
+	]
+}
