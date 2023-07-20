@@ -1,10 +1,41 @@
-AimUsing the testing functionality within Postman, provide a set of requests with teststhat cover the provided Acceptance Criteria.
-Testing Endpointhttp://universities.hipolabs.com/search
-Acceptance CriteriaResponse returns with an array of objects with the following fields:o web_pages (array of strings)o domains (array of strings)o country (string type)o name (string type)o state-province (string type)o alpha_two_code (string type)
-Querying a specific country (via “?country=” parameter) returns array ofobjects containing only items matching the specified country
-Querying for a specific university (via “?name=” parameter) should returnonly a single object matching the requested entry
+Aim
+Using the testing functionality within Postman, provide a set of requests with tests
+that cover the provided Acceptance Criteria.
 
-Querying for a non-existent university should return an empty arrayDeliverables
-Exported Postman collection (JSON format) containing executable requestswith relevant tests for AC as described
-Rough summary on approach taken, any issues encountered, potentialnext steps to improve tests/increase coverage
-Can be included as comments in the Postman tests or as a separatedocument
+
+Testing Endpoint
+http://universities.hipolabs.com/search
+
+Acceptance Criteria
+
+1 - Response returns with an array of objects with the following fields:
+
+- web_pages (array of strings)
+
+- domains (array of strings)
+
+- country (string type)
+
+- name (string type)
+
+- state-province (string type)
+
+- alpha_two_code (string type)
+
+2 - Querying a specific country (via “?country=” parameter) returns array of
+objects containing only items matching the specified country
+
+3 - Querying for a specific university (via “?name=” parameter) should return
+only a single object matching the requested entry
+
+4 - Querying for a non-existent university should return an empty array
+Deliverables
+
+5 - Exported Postman collection (JSON format) containing executable requests
+with relevant tests for AC as described
+
+6 - Rough summary on approach taken, any issues encountered, potential
+next steps to improve tests/increase coverage
+
+7 - Can be included as comments in the Postman tests or as a separate
+document
